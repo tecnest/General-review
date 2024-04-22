@@ -12,11 +12,13 @@ import matplotlib.pyplot as plt
 df= pd.read_excel("https://github.com/tecnest/General-review/raw/main/ITEMS%26COLOR(1).xlsx", header=None)
 
 new_header = df.iloc[2]  # Grab the third row for the header, remember it's index 2 because of zero-indexing
+new_header[0] = "category" 
 df = df[3:]  # Take the data less the header row
 df.columns = new_header  # Set the header row as the DataFrame header
 
 # Reset the index of the DataFrame if necessary
 df.reset_index(drop=True, inplace=True)
+
 
 numeric_columns = ['TY.Sales', 'oh', 'A_SellThru', 'TY.Qty', 'A_Days']
 df[numeric_columns] = df[numeric_columns].apply(pd.to_numeric, errors='coerce')
@@ -131,7 +133,7 @@ import pandas as pd
 
 fig = go.Figure()
 fig.add_trace(go.Bar(x=Cat1.index, y=Cat1['TY.Sales'], hoverinfo='y', marker_color='royalblue'))
-fig.update_layout(title='Sales by Category', width=1100, height=550, yaxis_title='TY.Sales', template='plotly_white')
+fig.update_layout(width=1100, height=550, yaxis_title='TY.Sales', template='plotly_white')
 st.plotly_chart(fig)  # Display the figure in Streamlit
 
 
@@ -194,7 +196,7 @@ for i in range(num_figures):
     subset_df = Color1[start_idx:end_idx]
     
     fig3 = go.Figure(go.Bar(x=subset_df.index, y=subset_df['TY.Sales'], name='TY.Sales'))
-    fig3.update_layout(
+    fig3.update_layout(width=1100, height=550,
         title=f'TY.Sales by Category (Part {i+1})',
         xaxis_title='Category',
         yaxis_title='TY.Sales',
@@ -229,3 +231,14 @@ fig2.update_layout(
 # Display the pie chart in the notebook
 st.plotly_chart(fig2)
 
+
+#------------------------------size------------------------------------#
+
+ds=pd.read_excel("https://github.com/tecnest/General-review/raw/main/ITEMS%26SIZE(1).xlsx", header=None)
+ds = ds[3:]  # Take the data less the header row
+ds.columns = new_header  # Set the header row as the DataFrame header
+ds.reset_index(drop=True, inplace=True)
+column_names = ds.columns.tolist()
+column_names[0] = 'Category'
+ds.columns = column_names
+st.DataFrame(ds)
