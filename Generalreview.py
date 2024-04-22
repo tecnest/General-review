@@ -269,11 +269,11 @@ Size=Size.applymap(format_numbers)
 st.dataframe(Size)
 
 #------------------visualisation size---------------------#
-    
-fig5 = go.Figure(go.Bar(x=Size.index, y=Size['TY.Sales'], name='TY.Sales'))
+Size['Size'] = df['Size'].astype(str)    
+fig5 = go.Figure(go.Bar(x=Size['Size'], y=Size['TY.Sales'], name='TY.Sales'))
 fig5.update_layout(
     title=f'TY.Sales by Size)',
-    xaxis_title='Category',
+    xaxis_title='Size',
     yaxis_title='TY.Sales')
     
 # Display the figure in the notebook
