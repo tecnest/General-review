@@ -89,7 +89,7 @@ desired_order = ['TY.Sales', 'Sales%', 'oh', 'Stock%', 'TY.Qty', 'A_SellThru']
 gender = gender.reindex(columns=desired_order)
 
 for col in gender:
-    gender[col] = gender[col].apply(lambda x: locale.format_string("%.2f", x, grouping=True) if not pd.isna(x) else np.nan)
+    gender[col] = gender[col].apply(lambda x: locale.format_string("%.2f", x, grouping=True))
 #gender.reset_index(drop=True, inplace=True)
 #gender.columns.values[0] = 'Category'
 gender
@@ -120,7 +120,7 @@ Cat = Cat.sort_values(by='TY.Sales', ascending=False)
 Cat1 = Cat.sort_values(by='TY.Sales', ascending=False)
 
 for col in Cat:
-    Cat[col] = Cat[col].apply(lambda x: locale.format_string("%.2f", x, grouping=True) if not pd.isna(x) else np.nan)
+    Cat[col] = Cat[col].apply(lambda x: locale.format_string("%.2f", x, grouping=True))
     
 st.header('Category Review')
 pd.DataFrame(Cat)
