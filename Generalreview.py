@@ -280,7 +280,7 @@ fig5.update_layout(
         title='Size',
         type='category',  # Ensure x-axis treats data as categorical
         categoryorder='array',  # Ensures categories are shown as per the order in the index
-        categoryarray=desired_order  # Ensures specific order from the array
+        categoryarray=desired_order,  # Ensures specific order from the array
 	tickvals=Size.index,  # Specify tick values to ensure all categories are shown
         ticktext=Size.index  # Specify the text for each tick value   
  ),
