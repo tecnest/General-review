@@ -271,9 +271,8 @@ st.dataframe(Size)
 #------------------visualisation size---------------------#
 
 size_order = Size.index.tolist() 
-Size.index = pd.Categorical(Size.index, categories=size_order, ordered=True)
-#Size['Size'] = Size['Size'].astype(str)    
-fig5 = go.Figure(go.Bar(x=Size['Size'], y=Size['TY.Sales'], name='TY.Sales'))
+Size.index = pd.Categorical(Size.index, categories=size_order, ordered=True)  
+fig5 = go.Figure(go.Bar(x=Size.index, y=Size['TY.Sales'], name='TY.Sales'))
 fig5.update_layout(
     title=f'TY.Sales by Size)',
     xaxis_title='Size',
