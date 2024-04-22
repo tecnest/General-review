@@ -268,5 +268,43 @@ Size = Size.sort_values(by='TY.Sales', ascending=False)
 Size=Size.applymap(format_numbers)
 st.dataframe(Size)
 
+num_categories = len(Size1.index)
+num_figures = num_categories // 50 + 1  # Adjust the number as needed
+categories_per_figure = 50
+start_idx = 0
 
+max_ty_sales = Size1['TY.Sales'].max()
+    
+fig5 = go.Figure(go.Bar(x=subset_df.index, y=subset_df['TY.Sales'], name='TY.Sales'))
+fig5.update_layout(
+    title=f'TY.Sales by Category (Part {i+1})',
+    xaxis_title='Category',
+    yaxis_title='TY.Sales',
+    yaxis=dict(range=[0, max_ty_sales + (0.1 * max_ty_sales)])  # Extend y-axis slightly above max
+    )
+    
+    # Display the figure in the notebook
+st.plotly_chart(fig5)
+    
+
+# Pie chart creation
+fig6 = go.Figure()
+fig6.add_trace(go.Pie(labels=Size1.index, values=Size1['Sales%'], hole=0.3, textinfo='none'))
+fig6.update_layout(
+    title='Sales Percentage by Category',
+    width=800,
+    height=800,
+    legend=dict(
+        x=1.5,  # Position the legend outside the pie chart on the right
+        y=1,
+        xanchor='left',
+        bgcolor='rgba(255, 255, 255, 0.5)',
+        bordercolor='Black',
+        borderwidth=1
+    ),
+    template='plotly_white'
+)
+
+# Display the pie chart in the notebook
+st.plotly_chart(fig6)
 
