@@ -264,9 +264,6 @@ desired_order = ['TY.Sales', 'Sales%', 'oh', 'Stock%', 'TY.Qty', 'A_SellThru']
 # Reindex the DataFrame with the desired order of columns
 Size = Size.reindex(columns=desired_order)
 Size = Size.sort_values(by='TY.Sales', ascending=False)
-Size1 = Size1.sort_values(by='TY.Sales', ascending=False)
-
-Size1=Size.copy()
 
 Size=Size.applymap(format_numbers)
 st.dataframe(Size)
