@@ -275,7 +275,12 @@ Size.index = pd.Categorical(Size.index, categories=size_order, ordered=True)
 fig5 = go.Figure(go.Bar(x=Size.index, y=Size['TY.Sales'], name='TY.Sales'))
 fig5.update_layout(
     title=f'TY.Sales by Size)',
-    xaxis_title='Size',
+    xaxis=dict(
+        title='Size',
+        type='category',  # Ensure x-axis treats data as categorical
+        categoryorder='array',  # Ensures categories are shown as per the order in the index
+        categoryarray=desired_order  # Ensures specific order from the array
+    ),
     yaxis_title='TY.Sales')
     
 # Display the figure in the notebook
