@@ -235,7 +235,7 @@ ds.columns = column_names
 ds.replace([np.inf, -np.inf], np.nan, inplace=True)
 ds.dropna(subset=['TY.Sales'], inplace=True)
 # Drop rows with 'NaN'
-ds.dropna(inplace=True)
+
 
 st.title('Size review')
 
@@ -279,7 +279,7 @@ men1=men.copy()
 boys1=boys.copy()
 
 Size=Size.applymap(format_numbers)
-st.dataframe(Size)
+Size
 
 
 
