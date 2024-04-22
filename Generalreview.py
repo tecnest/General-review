@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
 
 #------------------------------------loading data--------------------------------------------------#
 import streamlit as st
@@ -12,7 +10,6 @@ import matplotlib.pyplot as plt
 df= pd.read_excel("https://github.com/tecnest/General-review/raw/main/ITEMS%26COLOR(1).xlsx", header=None)
 
 new_header = df.iloc[2]  # Grab the third row for the header, remember it's index 2 because of zero-indexing
-new_header[0] = "category" 
 df = df[3:]  # Take the data less the header row
 df.columns = new_header  # Set the header row as the DataFrame header
 
@@ -36,13 +33,6 @@ df.dropna(subset=['TY.Sales'], inplace=True)
 # Drop rows with 'NaN'
 df.dropna(inplace=True)
 #pd.DataFrame(df)
-
-
-# <div style="text-align: center; color: blue;"><h1>General Review</h1></div>
-# <div style="text-align: left; color: orange;"><h2>Boy & Men Review</h2></div>
-# 
-
-# In[2]:
 
 
 #-----------------------------------drop columns  &  group_bys  -----------------------------------------------------#
@@ -241,4 +231,55 @@ ds.reset_index(drop=True, inplace=True)
 column_names = ds.columns.tolist()
 column_names[0] = 'Category'
 ds.columns = column_names
-st.DataFrame(ds)
+
+ds.replace([np.inf, -np.inf], np.nan, inplace=True)
+ds.dropna(subset=['TY.Sales'], inplace=True)
+# Drop rows with 'NaN'
+ds.dropna(inplace=True)
+
+st.title('Size review')
+
+ds1=ds.copy()
+
+columns_to_drop = ['itemid', 'EailiestDate', 'TY.Disc%', 'A_AvgQSoldD-MinDate']  # List of columns to drop
+df1.drop(columns_to_drop, axis=1, inplace=True)
+
+agg_funcs = {
+    'TY.Qty': 'sum',
+    'TY.Sales': 'sum',
+    'oh':'sum',
+    'A_SellThru': 'mean',
+}
+
+# Group by parameter and apply custom aggregation functions
+
+Size=ds1.groupby('Size').agg(agg_funcs)
+
+men = ds1[ds1['Gender'] == 'Men']
+men_size=men.groupby('Size').agg(agg_funcs)
+
+boys = ds1[ds1['Gender'] == 'Boys']
+boys_size =boys.groupby('Size')
+
+
+total_OH = Size['oh'].sum()
+total_sales=Size['TY.Sales'].sum()
+Size['Sales%']=(Size['TY.Sales']/ total_sales) * 100
+Size['Stock%'] = (Size['oh'] / total_OH) * 100
+
+
+desired_order = ['TY.Sales', 'Sales%', 'oh', 'Stock%', 'TY.Qty', 'A_SellThru']
+# Reindex the DataFrame with the desired order of columns
+Size = Size.reindex(columns=desired_order)
+Size = Size.sort_values(by='TY.Sales', ascending=False)
+Size1 = Size1.sort_values(by='TY.Sales', ascending=False)
+
+Size1=Size.copy()
+men1=men.copy()
+boys1=boys.copy()
+
+Size=Size.applymap(format_numbers)
+st.dataframe(Size)
+
+
+
