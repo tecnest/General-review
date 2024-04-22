@@ -279,7 +279,7 @@ men1=men.copy()
 boys1=boys.copy()
 
 Size=Size.applymap(format_numbers)
-Size
+st.dataframe(Size)
 
 
 
