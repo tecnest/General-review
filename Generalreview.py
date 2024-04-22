@@ -224,7 +224,7 @@ st.plotly_chart(fig2)
 
 #------------------------------size------------------------------------#
 
-ds=pd.read_excel("https://github.com/tecnest/General-review/raw/main/ITEMS%26SIZE(1).xlsx", header=None)
+ds=pd.read_excel("https://github.com/tecnest/General-review/raw/main/ITEMS%26SIZE.xlsx", header=None)
 ds = ds[3:]  # Take the data less the header row
 ds.columns = new_header  # Set the header row as the DataFrame header
 ds.reset_index(drop=True, inplace=True)
