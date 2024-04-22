@@ -269,7 +269,7 @@ Size=Size.applymap(format_numbers)
 st.dataframe(Size)
 
 #------------------visualisation size---------------------#
-Size['Size'] = df['Size'].astype(str)    
+Size['Size'] = Size['Size'].astype(str)    
 fig5 = go.Figure(go.Bar(x=Size['Size'], y=Size['TY.Sales'], name='TY.Sales'))
 fig5.update_layout(
     title=f'TY.Sales by Size)',
