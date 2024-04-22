@@ -9,8 +9,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
-url='ITEMS&COLOR(1).xlsx'
-df= pd.read_excel(url, header=None)
+df= pd.read_excel("ITEMS&COLOR(1).xlsx", header=None)
 
 new_header = df.iloc[2]  # Grab the third row for the header, remember it's index 2 because of zero-indexing
 df = df[3:]  # Take the data less the header row
