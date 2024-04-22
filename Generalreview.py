@@ -242,7 +242,7 @@ st.title('Size review')
 ds1=ds.copy()
 
 columns_to_drop = ['itemid', 'EailiestDate', 'TY.Disc%', 'A_AvgQSoldD-MinDate']  # List of columns to drop
-df1.drop(columns_to_drop, axis=1, inplace=True)
+ds1.drop(columns_to_drop, axis=1, inplace=True)
 
 agg_funcs = {
     'TY.Qty': 'sum',
