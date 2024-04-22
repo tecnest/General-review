@@ -7,13 +7,6 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
-padding_css = """
-<style>
-    .reportview-container .main .block-container {
-        padding-right: 2rem; /* Right padding */
-    }
-</style>
-"""
 
 df= pd.read_excel("https://github.com/tecnest/General-review/raw/main/ITEMS%26COLOR(1).xlsx", header=None)
 
@@ -295,7 +288,7 @@ fig5.update_layout(
     yaxis_title='TY.Sales')
     
 # Display the figure in the notebook
-st.plotly_chart(fig5)
+st.sidebar.plotly_chart(fig5)
     
 
 # Pie chart creation
@@ -317,5 +310,5 @@ fig6.update_layout(
 )
 
 # Display the pie chart in the notebook
-st.plotly_chart(fig6)
+st.sidebar.plotly_chart(fig6)
 
