@@ -176,11 +176,15 @@ Color1 = Color1.sort_values(by='TY.Sales', ascending=False)
 
 Color=Color.applymap(format_numbers)
 
+st.set_option('deprecation.showPyplotGlobalUse', False)  # Disable deprecation warning
 pd.set_option('display.max_rows', 200)
+
+# Get the first 200 rows
 first_50_rows = Color.head(200)
 
-# To display the result
-display(first_50_rows)
+# Display the result
+st.write(first_50_rows)
+
 
 num_categories = len(Color1.index)
 num_figures = num_categories // 50 + 1  # Adjust the number as needed
