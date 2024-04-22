@@ -89,7 +89,7 @@ desired_order = ['TY.Sales', 'Sales%', 'oh', 'Stock%', 'TY.Qty', 'A_SellThru']
 gender = gender.reindex(columns=desired_order)
 
 for col in gender:
-    gender[col] = gender[col].apply(lambda x: locale.format_string("%.2f", x, grouping=True))
+    gender[col] = gender[col].apply(lambda x: locale.format_string("%f", x, grouping=True))
 #gender.reset_index(drop=True, inplace=True)
 #gender.columns.values[0] = 'Category'
 gender
