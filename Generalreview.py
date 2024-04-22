@@ -225,12 +225,10 @@ st.plotly_chart(fig2)
 #------------------------------size------------------------------------#
 
 ds=pd.read_excel("https://github.com/tecnest/General-review/raw/main/ITEMS%26SIZE.xlsx", header=None)
+new_header = ds.iloc[2]
 ds = ds[3:]  # Take the data less the header row
 ds.columns = new_header  # Set the header row as the DataFrame header
 ds.reset_index(drop=True, inplace=True)
-column_names = ds.columns.tolist()
-column_names[0] = 'Category'
-ds.columns = column_names
 
 ds.replace([np.inf, -np.inf], np.nan, inplace=True)
 ds.dropna(subset=['TY.Sales'], inplace=True)
@@ -255,12 +253,6 @@ agg_funcs = {
 
 Size=ds1.groupby('Size').agg(agg_funcs)
 
-men = ds1[ds1['Gender'] == 'Men']
-men_size=men.groupby('Size').agg(agg_funcs)
-
-boys = ds1[ds1['Gender'] == 'Boys']
-boys_size =boys.groupby('Size')
-
 
 total_OH = Size['oh'].sum()
 total_sales=Size['TY.Sales'].sum()
@@ -275,8 +267,6 @@ Size = Size.sort_values(by='TY.Sales', ascending=False)
 Size1 = Size1.sort_values(by='TY.Sales', ascending=False)
 
 Size1=Size.copy()
-men1=men.copy()
-boys1=boys.copy()
 
 Size=Size.applymap(format_numbers)
 st.dataframe(Size)
