@@ -169,6 +169,11 @@ st.plotly_chart(fig1)
 #--------------------------------Colors------------------------------#
 st.title('Color review')
 
+total_OH = Color['oh'].sum()
+total_sales=Color['TY.Sales'].sum()
+Color['Sales%']=(Color['TY.Sales']/ total_sales) * 100
+Color['Stock%'] = (Color['oh'] / total_OH) * 100
+
 
 Color = Color.reindex(columns=desired_order)
 Color = Color.sort_values(by='TY.Sales', ascending=False)
@@ -215,7 +220,7 @@ st.header('Sales percentages by colors')
 
 # Pie chart creation
 fig1 = go.Figure()
-fig1.add_trace(go.Pie(labels=Color1.index, values=Color1['Sales%'], hole=0.3, textinfo='none'))
+fig1.add_trace(go.Pie(labels=Color1.index, values=Color1["Sales%"], hole=0.3, textinfo='none'))
 fig1.update_layout(
     title='Sales Percentage by Category',
     width=800,
