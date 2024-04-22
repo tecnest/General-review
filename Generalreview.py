@@ -88,10 +88,15 @@ desired_order = ['TY.Sales', 'Sales%', 'oh', 'Stock%', 'TY.Qty', 'A_SellThru']
 # Reindex the DataFrame with the desired order of columns
 gender = gender.reindex(columns=desired_order)
 
-for col in gender:
-    gender[col] = gender[col].apply(lambda x: locale.format_string("%.2f", x, grouping=True))
+def format_numbers(x):
+    if isinstance(x, (int, float)):
+        return '{:,.2f}'.format(x)
+    return x
+
 #gender.reset_index(drop=True, inplace=True)
 #gender.columns.values[0] = 'Category'
+
+gender=gender.applymap(format_numbers)
 gender
 
 
