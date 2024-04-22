@@ -7,6 +7,14 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
+padding_css = """
+<style>
+    .reportview-container .main .block-container {
+        padding-right: 2rem; /* Right padding */
+    }
+</style>
+"""
+
 df= pd.read_excel("https://github.com/tecnest/General-review/raw/main/ITEMS%26COLOR(1).xlsx", header=None)
 
 new_header = df.iloc[2]  # Grab the third row for the header, remember it's index 2 because of zero-indexing
