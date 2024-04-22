@@ -273,11 +273,9 @@ max_ty_sales = Size['TY.Sales'].max()
     
 fig5 = go.Figure(go.Bar(x=subset_df.index, y=subset_df['TY.Sales'], name='TY.Sales'))
 fig5.update_layout(
-    title=f'TY.Sales by Category (Part {i+1})',
+    title=f'TY.Sales by Size)',
     xaxis_title='Category',
-    yaxis_title='TY.Sales',
-    yaxis=dict(range=[0, max_ty_sales + (0.1 * max_ty_sales)])  # Extend y-axis slightly above max
-    )
+    yaxis_title='TY.Sales')
     
     # Display the figure in the notebook
 st.plotly_chart(fig5)
