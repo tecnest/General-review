@@ -58,7 +58,6 @@ columns_to_drop = ['itemid', 'EailiestDate', 'TY.Disc%', 'A_AvgQSoldD-MinDate'] 
 df1.drop(columns_to_drop, axis=1, inplace=True)
 
 agg_funcs = {
-    'A_Days': 'mean',
     'TY.Qty': 'sum',
     'TY.Sales': 'sum',
     'oh':'sum',
@@ -78,7 +77,9 @@ Color1=Color.copy()
 men1=men.copy()
 boys1=boys.copy()
 
-gender.drop('A_Days', axis=1, inplace=True)
+#-----------------------------gender--------------------------------------#
+
+#gender.drop('A_Days', axis=1, inplace=True)
 total_OH = gender['oh'].sum()
 total_sales=gender['TY.Sales'].sum()
 gender['Sales%']=(gender['TY.Sales']/ total_sales) * 100
@@ -93,26 +94,24 @@ def format_numbers(x):
         return '{:,.2f}'.format(x).replace(',', ' ')
     return x
 
-#gender.reset_index(drop=True, inplace=True)
-#gender.columns.values[0] = 'Category'
-
 gender=gender.applymap(format_numbers)
 gender
 
 
+
+#-------------------------------------category------------------------------#
+
 # <div style="text-align: left; color: orange;"><h2>Category Review</h2></div>
-# 
+ 
 
 # In[3]:
 
 
-Cat.drop('A_Days', axis=1, inplace=True)
 total_OH = Cat['oh'].sum()
 total_sales=Cat['TY.Sales'].sum()
 Cat['Sales%']=(Cat['TY.Sales']/ total_sales) * 100
 Cat['Stock%'] = (Cat['oh'] / total_OH) * 100
 
-Cat1.drop('A_Days', axis=1, inplace=True)
 total_OH = Cat1['oh'].sum()
 total_sales=Cat1['TY.Sales'].sum()
 Cat1['Sales%']=(Cat1['TY.Sales']/ total_sales) * 100
@@ -124,31 +123,26 @@ Cat = Cat.reindex(columns=desired_order)
 Cat = Cat.sort_values(by='TY.Sales', ascending=False)
 Cat1 = Cat.sort_values(by='TY.Sales', ascending=False)
 
-for col in Cat:
-    Cat[col] = Cat[col].apply(lambda x: locale.format_string("%.2f", x, grouping=True))
+Cat=Cat.applymap(format_numbers)
     
 st.header('Category Review')
 pd.DataFrame(Cat)
 Cat
 
-# <div style="text-align: center; color: blue;"><h1>Visualisation</h1></div>
-# 
 
 # In[7]:
+#-----------------------------visualisation----------------------------------#
 
 
 import streamlit as st
 import plotly.graph_objs as go
 import pandas as pd
 
-# Example of how you might define and use a function in Streamlit to create and display plots
+
 fig = go.Figure()
 fig.add_trace(go.Bar(x=Cat1.index, y=Cat1['TY.Sales'], hoverinfo='y', marker_color='royalblue'))
 fig.update_layout(title='Sales by Category', width=1100, height=550, yaxis_title='TY.Sales', template='plotly_white')
 st.plotly_chart(fig)  # Display the figure in Streamlit
-
-# Calling the function with data
-#create_bar_plot(Cat1, index=Cat1.index, value='TY.Sales', title='Sales Chart')
 
 
 
@@ -165,16 +159,74 @@ fig1.update_layout(title='Sales Percentage by Category', width=1000, height=1000
         bordercolor='Black',  # Optional: border color
         borderwidth=1  # Optional: border width
     ), template='plotly_white')
-#    return fig
 
-# Example dataset
-
-# Bar plot for TY.Sales
-#bar_fig = create_bar_plot(x=Cat1.index, y=Cat1['TY.Sales'], title='TY.Sales by Category')
-
-# Pie chart for Sales%
-#pie_fig = create_pie_chart(labels=Cat1.index, values=Cat1['Sales%'], title='Sales Percentage by Category')
 
 # Display the interactive plots
 st.plotly_chart(fig1)
+
+
+
+#--------------------------------Colors------------------------------#
+st.title('Color review')
+
+
+Color = Color.reindex(columns=desired_order)
+Color = Color.sort_values(by='TY.Sales', ascending=False)
+Color1 = Color1.sort_values(by='TY.Sales', ascending=False)
+
+Color=Color.applymap(format_numbers)
+
+pd.set_option('display.max_rows', 200)
+first_50_rows = Color.head(200)
+
+# To display the result
+display(first_50_rows)
+
+num_categories = len(Color1.index)
+num_figures = num_categories // 50 + 1  # Adjust the number as needed
+categories_per_figure = 50
+start_idx = 0
+
+st.header('Sales by color')
+
+max_ty_sales = Color1['TY.Sales'].max()
+for i in range(num_figures):
+    end_idx = min(start_idx + categories_per_figure, num_categories)
+    subset_df = Color1[start_idx:end_idx]
+    
+    fig = go.Figure(go.Bar(x=subset_df.index, y=subset_df['TY.Sales'], name='TY.Sales'))
+    fig.update_layout(
+        title=f'TY.Sales by Category (Part {i+1})',
+        xaxis_title='Category',
+        yaxis_title='TY.Sales',
+        yaxis=dict(range=[0, max_ty_sales + (0.1 * max_ty_sales)])  # Extend y-axis slightly above max
+    )
+    
+    # Display the figure in the notebook
+    fig.show()
+    
+    start_idx += categories_per_figure
+
+st.header('Sales percentages by colors')
+
+# Pie chart creation
+fig1 = go.Figure()
+fig1.add_trace(go.Pie(labels=Color1.index, values=Color1['Sales%'], hole=0.3, textinfo='none'))
+fig1.update_layout(
+    title='Sales Percentage by Category',
+    width=800,
+    height=800,
+    legend=dict(
+        x=1.5,  # Position the legend outside the pie chart on the right
+        y=1,
+        xanchor='left',
+        bgcolor='rgba(255, 255, 255, 0.5)',
+        bordercolor='Black',
+        borderwidth=1
+    ),
+    template='plotly_white'
+)
+
+# Display the pie chart in the notebook
+fig1.show()
 
