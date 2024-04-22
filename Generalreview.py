@@ -268,12 +268,8 @@ Size = Size.sort_values(by='TY.Sales', ascending=False)
 Size=Size.applymap(format_numbers)
 st.dataframe(Size)
 
-num_categories = len(Size1.index)
-num_figures = num_categories // 50 + 1  # Adjust the number as needed
-categories_per_figure = 50
-start_idx = 0
 
-max_ty_sales = Size1['TY.Sales'].max()
+max_ty_sales = Size['TY.Sales'].max()
     
 fig5 = go.Figure(go.Bar(x=subset_df.index, y=subset_df['TY.Sales'], name='TY.Sales'))
 fig5.update_layout(
