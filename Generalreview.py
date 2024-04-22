@@ -193,8 +193,8 @@ for i in range(num_figures):
     end_idx = min(start_idx + categories_per_figure, num_categories)
     subset_df = Color1[start_idx:end_idx]
     
-    fig = go.Figure(go.Bar(x=subset_df.index, y=subset_df['TY.Sales'], name='TY.Sales'))
-    fig.update_layout(
+    fig3 = go.Figure(go.Bar(x=subset_df.index, y=subset_df['TY.Sales'], name='TY.Sales'))
+    fig3.update_layout(
         title=f'TY.Sales by Category (Part {i+1})',
         xaxis_title='Category',
         yaxis_title='TY.Sales',
@@ -202,16 +202,16 @@ for i in range(num_figures):
     )
     
     # Display the figure in the notebook
-    fig.show()
+    fig3.show()
     
     start_idx += categories_per_figure
 
 st.header('Sales percentages by colors')
 
 # Pie chart creation
-fig1 = go.Figure()
-fig1.add_trace(go.Pie(labels=Color1.index, values=Color1["Sales%"], hole=0.3, textinfo='none'))
-fig1.update_layout(
+fig2 = go.Figure()
+fig2.add_trace(go.Pie(labels=Color1.index, values=Color1["Sales%"], hole=0.3, textinfo='none'))
+fig2.update_layout(
     title='Sales Percentage by Category',
     width=800,
     height=800,
@@ -227,5 +227,5 @@ fig1.update_layout(
 )
 
 # Display the pie chart in the notebook
-fig1.show()
+fig2.show()
 
