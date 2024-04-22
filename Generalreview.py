@@ -274,13 +274,16 @@ size_order = Size.index.tolist()
 Size.index = pd.Categorical(Size.index, categories=size_order, ordered=True)  
 fig5 = go.Figure(go.Bar(x=Size.index, y=Size['TY.Sales'], name='TY.Sales'))
 fig5.update_layout(
+    width=1100, height=550,
     title=f'TY.Sales by Size)',
     xaxis=dict(
         title='Size',
         type='category',  # Ensure x-axis treats data as categorical
         categoryorder='array',  # Ensures categories are shown as per the order in the index
         categoryarray=desired_order  # Ensures specific order from the array
-    ),
+	tickvals=Size.index,  # Specify tick values to ensure all categories are shown
+        ticktext=Size.index  # Specify the text for each tick value   
+ ),
     yaxis_title='TY.Sales')
     
 # Display the figure in the notebook
@@ -291,7 +294,7 @@ st.plotly_chart(fig5)
 fig6 = go.Figure()
 fig6.add_trace(go.Pie(labels=Size.index, values=Size['Sales%'], hole=0.3, textinfo='none'))
 fig6.update_layout(
-    title='Sales Percentage by Category',
+    title='Sales Percentage by Size',
     width=800,
     height=800,
     legend=dict(
