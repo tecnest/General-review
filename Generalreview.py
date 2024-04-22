@@ -288,7 +288,7 @@ fig5.update_layout(
     yaxis_title='TY.Sales')
     
 # Display the figure in the notebook
-st.sidebar.plotly_chart(fig5)
+st.plotly_chart(fig5)
     
 
 # Pie chart creation
@@ -310,5 +310,5 @@ fig6.update_layout(
 )
 
 # Display the pie chart in the notebook
-st.sidebar.plotly_chart(fig6)
+st.plotly_chart(fig6, width=1000)
 
