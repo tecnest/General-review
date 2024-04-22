@@ -71,11 +71,6 @@ Color=df1.groupby('Color').agg(agg_funcs)
 men = df1[df1['Gender'] == 'Men']
 boys = df1[df1['Gender'] == 'Boys']
 
-gender1=gender.copy()
-Cat1=Cat.copy()
-Color1=Color.copy()
-men1=men.copy()
-boys1=boys.copy()
 
 #-----------------------------gender--------------------------------------#
 
@@ -112,16 +107,11 @@ total_sales=Cat['TY.Sales'].sum()
 Cat['Sales%']=(Cat['TY.Sales']/ total_sales) * 100
 Cat['Stock%'] = (Cat['oh'] / total_OH) * 100
 
-total_OH = Cat1['oh'].sum()
-total_sales=Cat1['TY.Sales'].sum()
-Cat1['Sales%']=(Cat1['TY.Sales']/ total_sales) * 100
-Cat1['Stock%'] = (Cat1['oh'] / total_OH) * 100
-
 desired_order = ['TY.Sales', 'Sales%', 'oh', 'Stock%', 'TY.Qty', 'A_SellThru']
 # Reindex the DataFrame with the desired order of columns
 Cat = Cat.reindex(columns=desired_order)
 Cat = Cat.sort_values(by='TY.Sales', ascending=False)
-Cat1 = Cat.sort_values(by='TY.Sales', ascending=False)
+Cat1=Cat.copy()
 
 Cat=Cat.applymap(format_numbers)
     
@@ -177,7 +167,7 @@ Color['Stock%'] = (Color['oh'] / total_OH) * 100
 
 Color = Color.reindex(columns=desired_order)
 Color = Color.sort_values(by='TY.Sales', ascending=False)
-Color1 = Color1.sort_values(by='TY.Sales', ascending=False)
+Color1 = Color.copy()
 
 Color=Color.applymap(format_numbers)
 
