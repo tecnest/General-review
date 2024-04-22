@@ -90,7 +90,7 @@ gender = gender.reindex(columns=desired_order)
 
 def format_numbers(x):
     if isinstance(x, (int, float)):
-        return '{:,.2f}'.format(x)
+        return '{:,.2f}'.format(x).replace(',', ' ')
     return x
 
 #gender.reset_index(drop=True, inplace=True)
