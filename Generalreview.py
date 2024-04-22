@@ -202,7 +202,7 @@ for i in range(num_figures):
     )
     
     # Display the figure in the notebook
-    fig3.show()
+    st.plotly_chart(fig3)
     
     start_idx += categories_per_figure
 
@@ -227,5 +227,5 @@ fig2.update_layout(
 )
 
 # Display the pie chart in the notebook
-fig2.show()
+st.plotly_chart(fig2)
 
